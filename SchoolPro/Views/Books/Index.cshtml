@@ -1,0 +1,71 @@
+﻿@model IEnumerable<SchoolPro.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Manage Your Books</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="container row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4">
+            <div class="card ">
+                <div class="card-body">
+                    <h3 class="card-title text-primary">@item.BookName  </h3>
+                    <span class="text-muted" style="font-size:small">(@item.Points point)  @item.uploadDate.ToShortDateString()  </span>
+                    <h4 class="card-subtitle  text-muted" style="font-weight:bold">@item.User.Name  </h4>
+                    <p  m class="card-text" style="font-weight:bold">@item.Description .</p>
+
+                    @Html.ActionLink("Download", "DownLoadFile", new { id = item.Id }, new { @class = "card-link " })
+
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "card-link " })
+
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "card-link" })
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "card-link " })
+
+
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+    }
+</div>
+
+    @section styles{
+        <style>
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.3s;
+                padding: 2%;
+            }
+
+                .card:hover {
+                    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                }
+                p {
+     width: 250px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+        </style>
+    }
+
+
+

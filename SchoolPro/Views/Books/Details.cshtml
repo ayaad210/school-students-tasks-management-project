@@ -1,0 +1,49 @@
+﻿@model SchoolPro.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div  style="margin:auto">
+    <h4>Book</h4>
+    <hr />
+    <div class="card " >
+        <div class="card-body">
+            <h3 class="card-title text-primary">@Model.BookName  </h3>
+            <span class="text-muted" style="font-size:small">(@Model.Points point)  @Model.uploadDate.ToShortDateString()  </span>
+            <h4 class="card-subtitle  text-muted" style="font-weight:bold">@Model.User.Name  </h4>
+            <p m class="card-text" style="font-weight:bold">@Model.Description .</p>
+
+            @Html.ActionLink("Download", "DownLoadFile", new { id = Model.Id }, new { @class = "card-link " })
+
+
+
+            @Html.ActionLink("Details", "Details", new { id = Model.Id }, new { @class = "card-link" })
+
+
+
+
+
+        </div>
+    </div>
+
+</div>
+
+@section styles{
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            padding: 5%
+        }
+
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+
+
+    </style>
+}
+

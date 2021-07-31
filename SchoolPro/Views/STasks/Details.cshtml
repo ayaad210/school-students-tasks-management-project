@@ -1,0 +1,73 @@
+﻿@model SchoolPro.Models.STask
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Task Details</h2>
+
+<div class="container">
+    <hr />
+
+    <div class="col-lg-6">
+        <dl class="dl-horizontal h4">
+
+
+
+
+
+
+
+
+            <dt>
+                <label>Task Name</label>
+
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Notes)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Type)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Type)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Total)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Total)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="col-lg-6"style="border:2px red solid">
+        <dl >
+            <dt>
+                @Model.Content
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+        </dl>
+
+    </div>
+</div>
+
+

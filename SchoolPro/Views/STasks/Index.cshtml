@@ -1,0 +1,101 @@
+﻿@model IEnumerable<SchoolPro.Models.STask>
+
+@{
+    ViewBag.Title = "Index";
+
+    string x = "none";
+    if (ViewBag.who as string == "T")
+    {
+        x = "";
+    }
+
+}
+
+<h2>Index</h2>
+
+<p style="display:@x" >
+    @Html.ActionLink("Create New", "Create", null, new { })
+</p>
+
+
+@foreach (var item in Model)
+{
+    <div class="card col-lg-5" style="margin-bottom:4% ;margin-right:4% ;margin-left:4%">
+        <div class="row">
+            <div class="col-lg-8 ">
+
+                <h3 class="text-primary">   @item.Name  </h3>
+
+            </div>
+            <div class="col-lg-4 text-success">
+                <h3>    @item.Total  </h3> 
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 ">
+
+                <p class="h4">     @item.Type     in    @item.Teacher.Subject.Name </p>
+                </div>
+                <div class="col-lg-4">
+                    @item.Group.Name
+                </div>
+            </div>
+
+
+                <hr />
+
+                <div class="row h4">
+                    <div class="col-lg-12">
+
+                        Mr:   @item.Teacher.user.Name
+                    </div>
+                </div>
+                <hr />
+
+
+
+                <div class="row col-lg-12 h4">
+
+                    <p class="text-info">   @item.Notes  </p>
+
+                </div>
+
+                <hr />
+        <div class="row  ">
+
+            <div class="col-lg-12 ">
+
+                @Html.ActionLink("Answers", "TaskAnwsers", "answers", new { id = item.id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Details", "Details", new { id = item.id }, new { @class = "btn btn-default" }) ||
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn " , @style = "display:" + @x })
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @class = "btn text-danger" , @style = "display:"+@x })
+            </div>
+        </div>
+
+        </div>
+
+            }
+
+            @section styles{
+                <style>
+                    .card {
+                        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                        transition: 0.3s;
+                    }
+
+                        .card:hover {
+                            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                        }
+                        p {
+     width: 250px;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+                </style>
+            }
+

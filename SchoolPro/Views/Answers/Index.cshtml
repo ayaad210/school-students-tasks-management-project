@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SchoolPro.Models.Answer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Answers</h2>
+
+
+
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-default col-lg-4">
+        <div class="panel-heading">
+
+      <h3>   @Html.DisplayFor(modelItem => item.Student.user.Name)</h3>  
+                @Html.DisplayFor(modelItem => item.STask.Name)
+
+        </div>
+        <div class="panel-body ">
+
+         Group:   @Html.DisplayFor(modelItem => item.Student.Group.Name)
+            <hr />
+        Degree:    @Html.DisplayFor(modelItem => item.Degree)
+            <hr />
+       Answer Date:     @Html.DisplayFor(modelItem => item.Datetime)
+
+
+
+
+        </div>
+        <div class="panel-footer ">
+
+
+            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+
+            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+
+
+
+        </div>
+    </div>
+        
+       
+
+        
+      
+       
+}
+

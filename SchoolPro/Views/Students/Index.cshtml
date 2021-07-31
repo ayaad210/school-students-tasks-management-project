@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SchoolPro.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+    string x = "none";
+    if (ViewBag.who as string == "A")
+    {
+        x = "";
+    }
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @style = "display:" + x ,@class="btn btn-default"})
+</p>
+ <div class="container">
+
+    @foreach (var item in Model)
+    {
+
+
+        <div class="card col-lg-5"  style="margin-bottom:4% ;margin-right:4% ;margin-left:4%">
+            <div class="col-lg-12">
+                <h3 class="font-weight-bold mb-3">@item.user.Name </h3>
+            </div>
+            <div class="col-lg-12 h4">
+                Groub @item.Group.Name  
+
+
+            </div>
+            <hr />
+            <div class="col-lg-12 h4">
+                @item.user.Age  years
+
+            </div>
+            <hr />
+
+            <div class="col-lg-12 h4">
+                @item.Points   point
+            </div>
+            <hr />
+
+            <div class="col-lg-12">
+                @Html.ActionLink("Progress", "Studentprogress", new { id = item.id }, new { @class = "btn btn-primary " }) |
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @style = "display:" + x, @class = "btn btn-default"})
+                @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @style = "danger ; display:" + x, @class = "btn btn-danger" })
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+    }
+</div>
+
+
+
+@section styles{
+    <style>
+
+        .card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+
+}
+        .card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+    </style>
+    }
+

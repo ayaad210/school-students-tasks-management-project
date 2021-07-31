@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.Owin
+@using SchoolPro.Models
+
+
+@if (Request.IsAuthenticated)
+{
+    ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+
+
+
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            @Html.ActionLink("Ch Pass ", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+
+        @if (user.Roles.Where(r => r.RoleId == new ApplicationDbContext().Roles.Where(rr => rr.Name == "Admins").First().Id).ToList().Count > 0)
+        {
+
+            @*<li> @Html.ActionLink("Students ", "Index", "Students", null, htmlAttributes: new { @class = "" })   </li>*@
+            <li> @Html.ActionLink("Subjects ", "Index", "Subjects", null, htmlAttributes: new { @class = "" })   </li>
+            <li> @Html.ActionLink("Groups ", "Index", "Groups", null, htmlAttributes: new { @class = "" })   </li>
+            <li> @Html.ActionLink("Books ", "Index", "Books", null, htmlAttributes: new { @class = "" })   </li>
+            <li>@Html.ActionLink("Admins", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Teachers", "index", "Teachers", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Contacts", "index", "Contacts", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Perants", "index", "perants", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+
+        }
+        @if (user.Roles.Where(r => r.RoleId == new ApplicationDbContext().Roles.Where(rr => rr.Name == "Teachers").First().Id).ToList().Count > 0)
+        {
+
+            <li> @Html.ActionLink("Groups ", "Index", "Groups", routeValues: null, htmlAttributes: new {@class=""  })   </li>
+            @*<li> @Html.ActionLink("Students Progress ", "StudentsProgress", "Students", routeValues: null, htmlAttributes: new { @class = "" })   </li>*@
+            <li> @Html.ActionLink("Share Books ", "ShareIndex", "Books", routeValues: null, htmlAttributes: new { @class = "" })   </li>
+            <li> @Html.ActionLink("Your Books ", "index", "Books", routeValues: null, htmlAttributes: new { @class = "" })   </li>
+
+        }
+        @if (user.Roles.Where(r => r.RoleId == new ApplicationDbContext().Roles.Where(rr => rr.Name == "Students").First().Id).ToList().Count > 0)
+        {
+           
+
+           Student  st=     new ApplicationDbContext().Students.Where(ss => ss.user.Id == user.Id).FirstOrDefault();
+
+            
+            <li> @Html.ActionLink("Tasks ", "Index", "Stasks", routeValues: new { id =st.Group.id}, htmlAttributes: new { @class = "" })   </li>
+            <li> @Html.ActionLink("Share Books ", "ShareIndex", "Books", routeValues: null, htmlAttributes: new { @class = "" })   </li>
+            <li> @Html.ActionLink("Your Books ", "index", "Books", routeValues: null, htmlAttributes: new { @class = "" })   </li>
+
+              <li> @Html.ActionLink("Your Progress ", "Studentprogress", "Students", routeValues: new { id=st.id}, htmlAttributes: new { @class = "" })   </li>
+
+                }
+        @if (user.Roles.Where(r => r.RoleId == new ApplicationDbContext().Roles.Where(rr => rr.Name == "Perants").First().Id).ToList().Count > 0)
+        {
+        
+
+                Perant per = new ApplicationDbContext().Perants.Where(ss => ss.User.Id == user.Id).FirstOrDefault();
+
+            
+                <li> @Html.ActionLink("Student Progress ", "PerantStudents", "Students", routeValues: new { id = per.Id }, htmlAttributes: new { @class = "" })   </li>           }
+
+    </ul>
+          }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

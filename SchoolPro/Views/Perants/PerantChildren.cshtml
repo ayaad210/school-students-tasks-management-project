@@ -1,0 +1,201 @@
+﻿@model IEnumerable<SchoolPro.Models.Student>
+<hr />
+
+<h4 style="color:cornflowerblue">
+Perant Students
+
+</h4>
+<div class="row">
+  
+ 
+
+    <div class="col-lg-2 ">
+        @Html.DropDownList("Groups", ViewBag.Groups as SelectList, "--- Select Group ---", new { @id = "dropgroups", @class = "form-control" })
+
+    </div>
+    <div class="col-lg-2">
+        @Html.DropDownList("Students", ViewBag.Students as SelectList, "- Select student --", new { @id = "dropstudents", @class = "form-control" })
+    </div>
+
+  
+
+    <div class="col-lg-1">
+        <input type="button" value="+" class="btnaddNew" id="btnaddNew" />
+
+    </div>
+</div>
+
+
+<table id="mytable" class="table">
+    <tr>
+        <th>
+            Name
+    </th>
+        <th>Delete</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+
+                @item.user.Name
+            </td>
+
+
+            <td>
+                <input type="button" class="btndelete" id="btndelete" value="-" />
+                <input type="hidden" value="@item.id" />
+
+            </td>
+        </tr>
+    }
+
+</table>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+
+    $(document).on('click','.btnaddNew', function(){
+   // $('.btnaddNew').click(function () {
+        alert("s");
+        var perId = @Url.RequestContext.RouteData.Values["id"];
+        var Studentid_ = document.getElementById("dropstudents").value;
+
+        $.ajax({
+            data: { 'perantid': perId,  'studentid': Studentid_},
+            type:'GET',
+            url:'@Url.Action("InsertStudentToPerant")',
+            cache:false,
+            success: function(response) {
+
+                $('#mytable').append(response)
+
+
+            }
+        });
+
+
+    });
+
+
+
+    $(document).on('click','.btndelete', function(){
+        //$('.btndelete').click(function () {
+        var perId = @Url.RequestContext.RouteData.Values["id"];
+
+        var item=this;
+        var studentid_ =item.nextElementSibling.value ;
+
+        $.ajax({
+                data: { 'perantid': perId,  'studentid': studentid_},
+                type:'GET',
+                url:'@Url.Action("DeleteStudentFromPerant")',
+                cache:false,
+                success: function(response) {
+
+                      item.parentElement.parentElement.hidden=true;
+                    if (response=="1") {
+                        item.parentElement.parentElement.hidden=true;
+
+                    }
+                    else {
+                        alert("Failed");
+                    }
+
+                }
+            });
+
+
+ 
+    });
+
+
+    ///////
+
+
+
+
+
+    /////
+    $("#dropgroups").change(function () {
+        $("#dropstudents").empty();
+
+        $.get("/Perants/GetGroubstudents", { groupid:String( $("#dropgroups").val()) }, function (data) {
+            var s = "<option value=''> --SelectArea-- </option>"
+            $.each(data, function (index, row) {
+
+
+                s += "<option value='" + row.id + "'>" + row.user.Name + "</option>";
+
+            });
+            $("#dropstudents").html(s);
+
+        })
+    });
+
+</script>
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*$.ajax({
+        url: '@Url.Action("InsertStudentToPerant")',
+        type: 'GET',
+        cache: false,
+        data: {perantid:perId , studentid:Studentid_}
+    }).done(function(result) {
+        alert(result)
+        $('#mytable').append(result)
+    });*@
+
+
+@*$.ajax({
+        url: '@Url.Action("DeleteStudentFromPerant")',
+        type: 'GET',
+        cache: false,
+        data: {perantid:perId , studentid:studentid_}
+    }).done(function(result) {
+        if (result=="1") {
+            item.parentElement.parentElement.hidden=true;
+
+        }
+        else {
+            alert("Failed");
+        }
+    });*@
+
+
+@*$('#btnaddNew').click(function () {
+        // $("#myform").submit();
+        var perId = @Url.RequestContext.RouteData.Values["id"];
+        var Studentid_ = document.getElementById("dropstudents").value;
+
+
+        $.ajax({
+            data: {perantid:perId , studentid:Studentid_},
+            type:'GET',
+            url:'@Url.Action("InsertStudentToPerant")',
+            cache:false,
+            success: function(response) {
+
+                    $('#mytable').append(result)
+
+            }
+        });
+
+    });*@

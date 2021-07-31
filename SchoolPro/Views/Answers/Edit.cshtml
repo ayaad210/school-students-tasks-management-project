@@ -1,0 +1,87 @@
+﻿@model SchoolPro.Models.Answer
+
+@{
+    ViewBag.Title = "Edit";
+
+    string x = "none";
+    if (ViewBag.who as string == "T")
+    {
+        x = "";
+    }
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+        <div class="col-lg-6">
+
+
+            <div class="form-group" style="display:@x">
+                @Html.LabelFor(model => model.Degree, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Degree, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="display:@x">
+                @Html.LabelFor(model => model.Datetime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Datetime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Datetime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="display:@x">
+                <label class="control-label col-md-2"> Student Name</label>
+                <div class="col-md-10">
+                    @Html.DropDownList("Studentid", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Studentid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group" hidden>
+                @Html.LabelFor(model => model.STaskid, "STaskid", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("STaskid", null, htmlAttributes: new { @class = "form-control", @readonly = "readonly", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.STaskid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6" style="border:2px red solid ">
+            <div class="form-group">
+                <h4>Answer</h4>
+                <div class="col-md-10">
+                    @Html.HiddenFor(model => model.AnswerContent, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                    <p>   @Model.AnswerContent  </p>
+                    @Html.ValidationMessageFor(model => model.AnswerContent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

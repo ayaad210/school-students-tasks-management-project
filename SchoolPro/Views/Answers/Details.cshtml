@@ -1,0 +1,61 @@
+﻿@model SchoolPro.Models.Answer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container" style="margin-top:3%">
+    <h4>Answer Details</h4>
+
+    <div class="col-lg-6 ">
+        <dl class="dl-horizontal">
+            <dt>
+                <label>Task Name</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.STask.Name)
+            </dd>
+
+            <dt>
+                <label>Student Name</label>
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Student.user.Name)
+            </dd>
+
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Degree)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Degree)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Datetime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Datetime)
+            </dd>
+        </dl>
+    </div>
+
+    <div class="col-lg-6 " style="border:2px red solid">
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.AnswerContent)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AnswerContent)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+

@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SchoolPro.Models.Group>
+
+@{
+    ViewBag.Title = "Index";
+
+    string x = "none";
+    if (ViewBag.who as string == "A")
+    {
+        x = "";
+    }
+}
+
+<h2>Groubs</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",null, new { @style = "display:" + x , @class = "btn btn-default" })
+</p>
+
+<div class="row">
+   
+ 
+@foreach (var item in Model)
+{
+
+    <div class="panel panel-primary col-lg-4">
+        <div class="panel-heading">
+            @Html.DisplayFor(modelItem => item.Name)
+        </div>
+        <div class="panel-body ">
+
+
+            @Html.ActionLink("Students", "GroupStudents", "Students", new { id = item.id }, new { @class= "btn btn-primary" }) 
+            @Html.ActionLink("Tasks", "index", "stasks", new { id = item.id }, new { @class = "btn btn-primary" }) ||
+            @Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @style = "display:" + x , @class = "btn btn-default" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { @style = "display:" + x, @class = "btn btn-danger" })
+        </div>
+    </div>
+
+
+}
+
+
+    </div>
